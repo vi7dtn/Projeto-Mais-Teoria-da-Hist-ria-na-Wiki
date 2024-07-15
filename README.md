@@ -1,2 +1,2 @@
-# Projeto-Mais-Teoria-da-Hist-ria-na-Wiki
+# Projeto Mais Teoria da História na Wiki
 Scripts criados para utilização no Projeto Mais+
