@@ -1,4 +1,5 @@
-### Limpar o environment
+### Limpar o environment do RStudio
+
 rm(list=ls())
 
 ### Carregar os pacotes (lembrar de instalar com install.packages("") a primeira vez que for rodar o código)
@@ -31,7 +32,7 @@ result <- full_join(wiki_en, wiki_es, by = "item", suffix = c("_en", "_es")) %>%
 
 result <- select(result, article3, article1, article2, item, imageLabel)
 
-### Copiar os valores das colunas 'article_en' e 'article_es' para a coluna 'article' se estiverem presentes
+### Copiar os valores das colunas dos artigos em inglês e espanhol para a coluna 'article' se estiverem presentes
 
 # Assim colocamos os verbetes provenientes das outras tabelas na coluna principal, que será a coluna "Artigos em português"
 
@@ -122,6 +123,7 @@ result$article2 <- ifelse(
 ### Tratamento da coluna "Item"
 
 # Aqui a ideia é inserir o botão clicável "Criar" quando não for encontrado valor nenhum na célula
+
 # Quando encontrar, formatar o valor para virar um link para o Wikidata
 
 new_item <- "style=\"text-align: center;\"|{{Botão clicável 2|Criar|class=mw-ui-constructive center|url=https://www.wikidata.org/wiki/Special:NewItem}}"
