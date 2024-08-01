@@ -22,6 +22,56 @@ wiki_pt <- read.csv(caminho_pt)
 wiki_en <- read.csv(caminho_en)
 wiki_es <- read.csv(caminho_es)
 
+### Tratamento das colunas "article"
+
+# A ideia aqui é formatar o valor das células para que a Wikipédia entenda como um link interno
+
+# Remover duplicatas baseadas na coluna article
+
+wiki_pt <- wiki_pt %>%
+  distinct(article, .keep_all = TRUE)
+
+wiki_en <- wiki_en %>%
+  distinct(article, .keep_all = TRUE)
+
+wiki_es <- wiki_es %>%
+  distinct(article, .keep_all = TRUE)
+
+# Função de formatação
+
+transform_articlePT <- function(link) {
+  link <- sub("https://pt.wikipedia.org/wiki/", "[[", link)  # Substitui o início
+  link <- sub("$", "]]", link)  # Adiciona ]] no final
+  link <- gsub("_", " ", link)  # Substitui _ por espaço
+  return(link)
+}
+
+transform_articleEN <- function(link) {
+  link <- sub("https://en.wikipedia.org/wiki/", "[[", link)  # Substitui o início
+  link <- sub("$", "]]", link)  # Adiciona ]] no final
+  link <- gsub("_", " ", link)  # Substitui _ por espaço
+  return(link)
+}
+
+transform_articleES <- function(link) {
+  link <- sub("https://es.wikipedia.org/wiki/", "[[", link)  # Substitui o início
+  link <- sub("$", "]]", link)  # Adiciona ]] no final
+  link <- gsub("_", " ", link)  # Substitui _ por espaço
+  return(link)
+}
+
+# Aplicar as funções nas colunas
+
+wiki_pt$article <- sapply(wiki_pt$article, transform_articlePT)
+wiki_en$article <- sapply(wiki_en$article, transform_articleEN)
+wiki_es$article <- sapply(wiki_es$article, transform_articleES)
+
+# Função para decodificar percent-encoding
+
+wiki_pt$article <- sapply(wiki_pt$article, URLdecode)
+wiki_en$article <- sapply(wiki_en$article, URLdecode)
+wiki_es$article <- sapply(wiki_es$article, URLdecode)
+
 ### Juntar as três tabelas em uma só com base na coluna "item" (o QID do Wikidata)
 
 result <- full_join(wiki_en, wiki_es, by = "item", suffix = c("_en", "_es")) %>%
