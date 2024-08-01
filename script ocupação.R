@@ -24,8 +24,6 @@ wiki_es <- read.csv(caminho_es)
 
 ### Tratamento das colunas "article"
 
-# A ideia aqui é formatar o valor das células para que a Wikipédia entenda como um link interno
-
 # Remover duplicatas baseadas na coluna article
 
 wiki_pt <- wiki_pt %>%
@@ -38,6 +36,8 @@ wiki_es <- wiki_es %>%
   distinct(article, .keep_all = TRUE)
 
 # Função de formatação
+
+# A ideia aqui é formatar o valor das células para que a Wikipédia entenda como um link interno
 
 transform_articlePT <- function(link) {
   link <- sub("https://pt.wikipedia.org/wiki/", "[[", link)  # Substitui o início
