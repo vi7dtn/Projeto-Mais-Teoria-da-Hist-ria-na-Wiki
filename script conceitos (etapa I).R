@@ -96,8 +96,26 @@ write_xlsx(epistemologia, ".xlsx")
 
 conceitos_duplicados <- inner_join(intelectual, epistemologia, by = "Item no Wikidata")
 
+# Selecione apenas a colunas "Artigos em português"
+
+conceitos_duplicados <- select(conceitos_duplicados, `Artigos em português`)
+
+# Remova os colchetes de "Artigos em português"
+
+conceitos_duplicados$`Artigos em português` <- gsub("[[", "", conceitos_duplicados$`Artigos em português`)
+conceitos_duplicados$`Artigos em português` <- gsub("]]", "", conceitos_duplicados$`Artigos em português`)
+
+# Crie uma coluna chamada "Tabela"
+
+conceitos_duplicados <- conceitos_duplicados$Tabela
+
+# Renomeie as colunas
+
+names(conceitos_duplicados) <- c("Conceito",
+                                 "Tabela")
+
 ### Exportar
 
 setwd("")
-write_xlsx(conceitos_duplicados, ".xlsx")
+write_xlsx(conceitos_duplicados, "Conceitos duplicados.xlsx")
 
