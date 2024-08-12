@@ -14,6 +14,8 @@ caminho_pt <- ".csv"
 caminho_en <- ".csv"
 caminho_es <- ".csv"
 
+# Carregar os arquivos
+
 impressos_pt <- read.csv(caminho_pt)
 impressos_en <- read.csv(caminho_en)
 impressos_es <- read.csv(caminho_es)
