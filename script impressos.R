@@ -80,6 +80,7 @@ impressos$article_pt[2600:2655] <- impressos$article[2600:2655]
 impressos$authorLabel_pt[697:2599] <- impressos$authorLabel_en[697:2599]
 impressos$authorLabel_pt[2600:2655] <- impressos$authorLabel[2600:2655]
 
+# Selecione as colunas pertinentes
 
 impressos <- select(impressos, article_pt, authorLabel_pt, article_en, article, item)
 
