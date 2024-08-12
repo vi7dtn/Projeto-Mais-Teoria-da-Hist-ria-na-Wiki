@@ -24,6 +24,54 @@ intelectual_pt <- read.csv(caminho_pt_intelectual)
 intelectual_en <- read.csv(caminho_en_intelectual)
 intelectual_es <- read.csv(caminho_es_intelectual)
 
+### Limpeza dos dados
+
+# Remover duplicatas baseadas na coluna article
+
+intelectual_pt <- intelectual_pt %>%
+  distinct(article, .keep_all = TRUE)
+
+intelectual_en <- intelectual_en %>%
+  distinct(article, .keep_all = TRUE)
+
+intelectual_es <- intelectual_es %>%
+  distinct(article, .keep_all = TRUE)
+
+# Formatar o valor das células para que a Wikipédia entenda como um link interno
+
+transform_articlePT <- function(link) {
+  link <- sub("https://pt.wikipedia.org/wiki/", "[[", link)  # Substitui o início
+  link <- sub("$", "]]", link)  # Adiciona ]] no final
+  link <- gsub("_", " ", link)  # Substitui _ por espaço
+  return(link)
+}
+
+transform_articleEN <- function(link) {
+  link <- sub("https://en.wikipedia.org/wiki/", "[[", link)  # Substitui o início
+  link <- sub("$", "]]", link)  # Adiciona ]] no final
+  link <- gsub("_", " ", link)  # Substitui _ por espaço
+  return(link)
+}
+
+transform_articleES <- function(link) {
+  link <- sub("https://es.wikipedia.org/wiki/", "[[", link)  # Substitui o início
+  link <- sub("$", "]]", link)  # Adiciona ]] no final
+  link <- gsub("_", " ", link)  # Substitui _ por espaço
+  return(link)
+}
+
+# Aplicar as funções nas colunas
+
+intelectual_pt$article <- sapply(intelectual_pt$article, transform_articlePT)
+intelectual_en$article <- sapply(intelectual_en$article, transform_articleEN)
+intelectual_es$article <- sapply(intelectual_es$article, transform_articleES)
+
+# Função para decodificar percent-encoding
+
+intelectual_pt$article <- sapply(intelectual_pt$article, URLdecode)
+intelectual_en$article <- sapply(intelectual_en$article, URLdecode)
+intelectual_es$article <- sapply(intelectual_es$article, URLdecode)
+
 ### Tratamento dos dados (etapa I)
 
 # Fazer a junção das tabelas com base na coluna 'item'
@@ -63,6 +111,54 @@ caminho_es__epistemologia <- ".csv"
 epistemologia_pt <- read.csv(caminho_pt_epistemologia)
 epistemologia_en <- read.csv(caminho_en_epistemologia)
 epistemologia_es <- read.csv(caminho_es_epistemologia)
+
+### Limpeza dos dados
+
+# Remover duplicatas baseadas na coluna article
+
+epistemologia_pt <- epistemologia_pt %>%
+  distinct(article, .keep_all = TRUE)
+
+epistemologia_en <- epistemologia_en %>%
+  distinct(article, .keep_all = TRUE)
+
+epistemologia_es <- epistemologia_es %>%
+  distinct(article, .keep_all = TRUE)
+
+# Formatar o valor das células para que a Wikipédia entenda como um link interno
+
+transform_articlePT <- function(link) {
+  link <- sub("https://pt.wikipedia.org/wiki/", "[[", link)  # Substitui o início
+  link <- sub("$", "]]", link)  # Adiciona ]] no final
+  link <- gsub("_", " ", link)  # Substitui _ por espaço
+  return(link)
+}
+
+transform_articleEN <- function(link) {
+  link <- sub("https://en.wikipedia.org/wiki/", "[[", link)  # Substitui o início
+  link <- sub("$", "]]", link)  # Adiciona ]] no final
+  link <- gsub("_", " ", link)  # Substitui _ por espaço
+  return(link)
+}
+
+transform_articleES <- function(link) {
+  link <- sub("https://es.wikipedia.org/wiki/", "[[", link)  # Substitui o início
+  link <- sub("$", "]]", link)  # Adiciona ]] no final
+  link <- gsub("_", " ", link)  # Substitui _ por espaço
+  return(link)
+}
+
+# Aplicar as funções nas colunas
+
+epistemologia_pt$article <- sapply(epistemologia_pt$article, transform_articlePT)
+epistemologia_en$article <- sapply(epistemologia_en$article, transform_articleEN)
+epistemologia_es$article <- sapply(epistemologia_es$article, transform_articleES)
+
+# Função para decodificar percent-encoding
+
+epistemologia_pt$article <- sapply(epistemologia_pt$article, URLdecode)
+epistemologia_en$article <- sapply(epistemologia_en$article, URLdecode)
+epistemologia_es$article <- sapply(epistemologia_es$article, URLdecode)
 
 ### Tratamento dos dados (etapa I)
 
