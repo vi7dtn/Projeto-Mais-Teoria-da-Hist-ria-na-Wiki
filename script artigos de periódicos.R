@@ -1,16 +1,30 @@
+### Limpar ambiente do RStudio
+
 rm(list=ls())
+
+### Carregar pacotes
 
 library(dplyr)
 library(readxl)
 library(writexl)
 
-caminho <- "D:/reflection/UFRGS/Doutorado/2024/Projeto Mais+/Mais Mulheres/listas a editar/impressos/periodicos/periodicos_a_criar2.xlsx"
+### Definir caminho do arquivo
 
-periodicos <- read_excel(caminho)
+caminho_periodicos <- ".xlsx"
+
+### Carregar arquivo
+
+periodicos <- read_excel(caminho_periodicos)
+
+### Tratamento dos dados
 
 # Criar coluna "Item"
 
 periodicos$`Item no Wikidata` <- "style=\"text-align: center;\"|{{Botão clicável 2|class=mw-ui-progressive|Criar|url=https://www.wikidata.org/wiki/Special:NewItem}}"
+
+# Criar coluna "Instância de" com o valor de "artigo acadêmico" no Wikidata
+
+periodicos$`Instância de` <- "Q13442814"
 
 # Formatar coluna "URL"
 
@@ -19,9 +33,17 @@ URL_transform <- function(x) {
   x <- gsub("$", "}}", x)
 }
 
-periodicos$URL <- URL_transform(periodicos$URL)
+periodicos$URL <- if_else(
+  is.na(periodicos$URL),
+  periodicos$URL,
+  URL_transform(periodicos$URL)
+)
+
+# Selecionar colunas
 
 periodicos <- select(periodicos, Título, Autoria, `Item no Wikidata`, `Instância de`, Periódico, Volume, Número, URL)
+
+# Renomear
 
 names(periodicos) <- c("Título", 
                    "Autoria",
@@ -32,9 +54,11 @@ names(periodicos) <- c("Título",
                    "Número", 
                    "Carregar no Commons")
 
+# Garantir que o número esteja formatado como número inteiro
+
 periodicos$Número <- as.integer(periodicos$Número)
 
-# Centralizar texto na coluna
+# Incluir texto em formato css para centralizar valor na coluna
 
 center <- "style=\"text-align: center;\"|"
 
@@ -43,6 +67,7 @@ periodicos$Periódico <- gsub("^", center, periodicos$Periódico)
 periodicos$Volume <- gsub("^", center, periodicos$Volume)
 periodicos$Número <- gsub("^", center, periodicos$Número)
 
-# Exportar
-setwd("D:/reflection/UFRGS/Doutorado/2024/Projeto Mais+/Mais Mulheres/listas a editar/impressos/periodicos")
-write_xlsx(periodicos, "periodicosfinal.xlsx")
+### Exportar
+
+setwd("")
+write_xlsx(, ".xlsx")
