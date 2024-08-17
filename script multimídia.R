@@ -1,36 +1,53 @@
+### Limpar o ambiente do RSTudio
+
 rm(list=ls())
+
+### Carregar pacotes
 
 library(dplyr)
 library(readxl)
 library(writexl)
 
-caminho <- "D:/reflection/UFRGS/Doutorado/2024/Projeto Mais+/Mais Mulheres/listas a editar/multimídia/multimídia.xlsx"
+### Definir caminho do arquivo
 
-lista <- read_excel(caminho)
+caminho_multimidia <- ".xlsx"
 
-# Formatar links
+### Carregar arquivo
 
-lista$Link[1:4] <- gsub("^", "{{Botão clicável 2|Youtube|class=mw-ui-destructive|url=", lista$Link[1:4])
-lista$Link[1:4] <- gsub("$", " }}", lista$Link[1:4])
+multimida <- read_excel(caminho)
 
-lista$Link[5:121] <- gsub("^", "style=\"text-align: center;\"|{{Botão clicável 2|Flickr|class=mw-ui-progressive|url=", lista$Link[5:121])
-lista$Link[5:121] <- gsub("$", " }}", lista$Link[5:121])
+### Tratamento dos dados
 
-lista$Link[122:180] <- gsub("^", "{{Botão clicável 2|Youtube|class=mw-ui-destructive|url=", lista$Link[122:180])
-lista$Link[122:180] <- gsub("$", " }}", lista$Link[122:180])
+## Inserir botão clicável na coluna Link
 
-# Centralizar texto
+# Para vídeos hospedados no Youtube (adaptar linhas)
 
-lista$Autoria <- gsub("^", "style=\"text-align: center;\"|", lista$Autoria)
-lista$Ocupação <- gsub("^", "style=\"text-align: center;\"|", lista$Ocupação)
-lista$Mídia <- gsub("^", "style=\"text-align: center;\"|", lista$Mídia)
+multimida$Link[1:4] <- gsub("^", "{{Botão clicável 2|Youtube|class=mw-ui-destructive|url=", multimida$Link[1:4]) # Adaptar linhas
+multimida$Link[1:4] <- gsub("$", " }}", multimida$Link[1:4])
 
-# Formatar nome (inserir tipo de conteúdo no início do)
+# Para imagens hospedadas no Flickr (adaptar linhas)
 
-lista$Nome[122:167] <- gsub("#VariaHistoria", "(Entrevista) #VariaHistoria", lista$Nome[122:167])
-lista$Nome[168:171] <- gsub("H60M", "(Entrevista) H60M", lista$Nome[168:171])
-lista$Nome[172:180] <- gsub("Podcast do HuMANAS: Pesquisadoras em Rede -", "(Podcast)", lista$Nome[172:180])
+multimida$Link[5:121] <- gsub("^", "style=\"text-align: center;\"|{{Botão clicável 2|Flickr|class=mw-ui-progressive|url=", lista$Link[5:121])
+multimida$Link[5:121] <- gsub("$", " }}", multimida$Link[5:121])
 
-# Exportar
-setwd("D:/reflection/UFRGS/Doutorado/2024/Projeto Mais+/Mais Mulheres/listas a editar/multimídia")
-write_xlsx(lista, "multimídiafinal.xlsx")
+# Para áudios hospedados no Youtube (adaptar linhas)
+
+multimida$Link[122:180] <- gsub("^", "{{Botão clicável 2|Youtube|class=mw-ui-destructive|url=", multimida$Link[122:180])
+multimida$Link[122:180] <- gsub("$", " }}", multimida$Link[122:180])
+
+## Centralizar texto
+
+multimidia$Autoria <- gsub("^", "style=\"text-align: center;\"|", multimidia$Autoria)
+multimidia$Ocupação <- gsub("^", "style=\"text-align: center;\"|", multimidia$Ocupação)
+multimidia$Mídia <- gsub("^", "style=\"text-align: center;\"|", multimidia$Mídia)
+
+## Formatar nome (inserir tipo de conteúdo no início da célula)
+
+multimidia$Nome[122:167] <- gsub("^", "(Podcast)", multimidia$Nome[122:167]) # Adaptar linhas
+multimidia$Nome[168:171] <- gsub("^", "(Entrevista)", multimidia$Nome[168:171])
+multimidia$Nome[172:180] <- gsub("^", "(Live)", multimidia$Nome[172:180])
+
+### Exportar
+
+setwd("")
+write_xlsx(multimidia, ".xlsx")
