@@ -180,4 +180,4 @@ instorg$Local <- gsub("^", "style=\"text-align: center;\"|", instorg$Local)
 ### Exportar
 
 setwd("")
-write_xlsx(instorg, "organizações científicas.xlsx")
+write_xlsx(instorg, ".xlsx")
